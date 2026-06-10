@@ -10,9 +10,15 @@ import os
 
 app = FastAPI()
 
+origins = [
+    "http://localhost:5173",
+    "https://www.invitamx.lat",
+    "https://invitamx.lat",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.getenv("ALLOWED_HOSTS")],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
