@@ -2,26 +2,20 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import Base, engine
-from app.models.invitation import Invitation
 from app.routers.invitations import router as invitations_router
 
-import os
-
+from app.core.config import settings
 
 app = FastAPI()
 
-origins = [
-    "http://localhost:5173",
-    "https://www.invitamx.lat",
-    "https://invitamx.lat",
-]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=settings.frontend_urls,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    max_age=86400,  # 24 horas
 )
 
 app.include_router(invitations_router)
